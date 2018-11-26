@@ -13,15 +13,27 @@ public class Server {
     private String id;
     private String name;
     private String status;
-
-    @Override
-    public String toString() {
-        return "Server{" + "id=" + id + ", name=" + name + ", status=" + status + ", KeyName=" + KeyName + ", FloatingIP=" + FloatingIP + ", VlanID=" + VlanID + '}';
-    }
-
     private String KeyName;
     private String FloatingIP;
     private String VlanID;
+    private String VlanIP;
+
+    @Override
+    public String toString() {
+        return "Server{" + "id=" + id + ", name=" + name + ", status=" + status + ", KeyName=" + KeyName + ", FloatingIP=" + FloatingIP + ", VlanID=" + VlanID + ", VlanIP=" + VlanIP + '}';
+    }
+
+    public String getVlanIP() {
+        return VlanIP;
+    }
+
+    public void setVlanIP(String VlanIP) {
+        this.VlanIP = VlanIP;
+    }
+
+ 
+
+
     public String getKeyName() {
         return KeyName;
     }
@@ -40,14 +52,16 @@ public class Server {
     
     //overload 
 
-    public Server(String id, String name, String status, String KeyName, String FloatingIP, String VlanID) {
+    public Server(String id, String name, String status, String KeyName, String FloatingIP, String VlanID, String VlanIP) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.KeyName = KeyName;
         this.FloatingIP = FloatingIP;
         this.VlanID = VlanID;
+        this.VlanIP = VlanIP;
     }
+
 
     public void setVlanID(String VlanID) {
         this.VlanID = VlanID;

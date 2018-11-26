@@ -114,6 +114,7 @@ public class nova {
                 String ManagementIP="";
                 String subnetName="";
                 String VlanID="";
+                String VlanIP="";
                 
                 //loop through hash map
                 Iterator mapiterator = IPMap.entrySet().iterator();
@@ -122,7 +123,11 @@ public class nova {
                 String ip=entry.getKey().toString();
   
                 if(ip.contains(managementNetworkIpPattern)) ManagementIP=ip;
-                if(ip.contains(nokiaVlanPattern)) subnetName=entry.getValue().toString();
+                if(ip.contains(nokiaVlanPattern)) {
+                    subnetName=entry.getValue().toString();
+                    VlanIP=ip;
+                            
+                            };
                 //EquipementType+"VLAN-"+SegmentationID+"Private-Network";
                 
                 }
@@ -131,7 +136,7 @@ public class nova {
                 if (Parts.length > 1) VlanID=Parts[Parts.length-3];
                 
                 System.out.println(VlanID);
-                Server server = new Server(id, name, status, key_name, ManagementIP,VlanID);
+                Server server = new Server(id, name, status, key_name, ManagementIP,VlanID,VlanIP);
                 //System.out.println(server.toString());
                 list.add(server);
             }

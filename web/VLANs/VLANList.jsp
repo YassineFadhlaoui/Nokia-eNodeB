@@ -115,7 +115,7 @@
                     <td><c:out value="${vlan.vlan.name}"/></td>
                     <td><center><c:out value="${vlan.vlan.segmentationID}"/></center></td>
                     <td><c:out value="${vlan.instance.floatingIP}"/></td>
-                    <td><c:out value="${vlan.instance.floatingIP}"/></td>
+                    <td><c:out value="${vlan.instance.vlanIP}"/></td>
                     <td><span class='badge badge-pill <c:choose><c:when test="${vlan.instance.status.equals('ACTIVE')}"><c:out value="badge-primary"/></c:when><c:otherwise><c:out value="badge-danger"/></c:otherwise>   </c:choose>' > <c:out value="${vlan.instance.status}"/></span></td>
                     <td><center><button class="btn btn-outline-secondary" type="button"> <i class="fas fa-cloud-download-alt"></i> <a href="<c:url value="/DownloadKey?id=${vlan.instance.keyName}" />">Download</a></button></center></td>
                     <td> <c:out value="${vlan.stack.name}"/></td>

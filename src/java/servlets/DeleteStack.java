@@ -55,7 +55,7 @@ public class DeleteStack extends HttpServlet {
 
             List<VLAN> VLANs = new ArrayList();
             if (!Networks.isEmpty()) {
-                Server nullInstance = new Server(null, null, null, null, null, null);
+                Server nullInstance = new Server(null, null, null, null, null, null,null);
                 HeatStack stack = new HeatStack(null, null, null, null);
 
                 for (Network network : Networks) {
