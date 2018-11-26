@@ -90,7 +90,7 @@ public class stack {
                 }
                
                 HeatStack Stack = new HeatStack(name, VLAN, id, IP);
-                System.out.println(Stack);
+                //System.out.println(Stack);
                 list.add(Stack);
             }
             }

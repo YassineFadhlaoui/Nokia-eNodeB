@@ -85,7 +85,7 @@ public class listVlans extends HttpServlet {
                             if (!stack.getVLAN().isEmpty()) {
                                 String[] parts = stack.getVLAN().split("-");
                                 VLANID = parts[parts.length - 3];
-                                System.out.println(VLANID);
+                                //System.out.println(VLANID);
                             }
 
                             if (VLANID.equalsIgnoreCase(vlan.getVlan().getSegmentationID())) {

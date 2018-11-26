@@ -5,6 +5,8 @@
  */
 package servers;
 
+import networks.InstanceVirtualInterface;
+
 /**
  *
  * @author yassine
@@ -14,87 +16,83 @@ public class Server {
     private String name;
     private String status;
     private String KeyName;
-    private String FloatingIP;
     private String VlanID;
-    private String VlanIP;
+    private InstanceVirtualInterface managementInterrface;
+    private InstanceVirtualInterface vlanInterrface;
 
-    @Override
-    public String toString() {
-        return "Server{" + "id=" + id + ", name=" + name + ", status=" + status + ", KeyName=" + KeyName + ", FloatingIP=" + FloatingIP + ", VlanID=" + VlanID + ", VlanIP=" + VlanIP + '}';
-    }
-
-    public String getVlanIP() {
-        return VlanIP;
-    }
-
-    public void setVlanIP(String VlanIP) {
-        this.VlanIP = VlanIP;
-    }
-
- 
-
-
-    public String getKeyName() {
-        return KeyName;
-    }
-
-    public String getFloatingIP() {
-        return FloatingIP;
-    }
-
-    public void setKeyName(String KeyName) {
-        this.KeyName = KeyName;
-    }
-
-    public void setFloatingIP(String FloatingIP) {
-        this.FloatingIP = FloatingIP;
-    }
-    
-    //overload 
-
-    public Server(String id, String name, String status, String KeyName, String FloatingIP, String VlanID, String VlanIP) {
+    public Server(String id, String name, String status, String KeyName, String VlanID, InstanceVirtualInterface managementInterrface, InstanceVirtualInterface vlanInterrface) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.KeyName = KeyName;
-        this.FloatingIP = FloatingIP;
         this.VlanID = VlanID;
-        this.VlanIP = VlanIP;
-    }
-
-
-    public void setVlanID(String VlanID) {
-        this.VlanID = VlanID;
-    }
-
-    public String getVlanID() {
-        return VlanID;
-    }
-
-    
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
+        this.managementInterrface = managementInterrface;
+        this.vlanInterrface = vlanInterrface;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getKeyName() {
+        return KeyName;
+    }
+
+    public void setKeyName(String KeyName) {
+        this.KeyName = KeyName;
+    }
+
+    public String getVlanID() {
+        return VlanID;
+    }
+
+    public void setVlanID(String VlanID) {
+        this.VlanID = VlanID;
+    }
+
+    public InstanceVirtualInterface getManagementInterrface() {
+        return managementInterrface;
+    }
+
+    public void setManagementInterrface(InstanceVirtualInterface managementInterrface) {
+        this.managementInterrface = managementInterrface;
+    }
+
+    public InstanceVirtualInterface getVlanInterrface() {
+        return vlanInterrface;
+    }
+
+    public void setVlanInterrface(InstanceVirtualInterface vlanInterrface) {
+        this.vlanInterrface = vlanInterrface;
+    }
+
+    @Override
+    public String toString() {
+        return "Server{" + "id=" + id + ", name=" + name + ", status=" + status + ", KeyName=" + KeyName + ", VlanID=" + VlanID + ", managementInterrface=" + managementInterrface + ", vlanInterrface=" + vlanInterrface + '}';
+    }
+
+  
+
+
+  
 }

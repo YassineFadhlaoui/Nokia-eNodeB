@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
-import javax.persistence.Parameter;
+import networks.InstanceVirtualInterface;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -93,51 +93,57 @@ public class nova {
                 JSONObject addresses = new JSONObject(servers.getJSONObject(i).get("addresses").toString());
                 
                 Set set = addresses.keySet();
-                Map<String,String> IPMap = new HashMap<String, String>();
+                Map<String,InstanceVirtualInterface> IPMap = new HashMap<String, InstanceVirtualInterface>();
                 
                 for (Object s : set) {
                     try{
                     org.json.JSONArray addr = addresses.getJSONArray(s.toString());
-                    
+                    System.out.println(addr);
                     if(addr.length() > 0){
                         for(int item=0; item < addr.length(); item++){
                            
                            String  address =addr.getJSONObject(item).getString("addr");
+                           String  mac =addr.getJSONObject(item).getString("OS-EXT-IPS-MAC:mac_addr");
                            //System.out.println(address);
-                           IPMap.put(address,s.toString());
+                           InstanceVirtualInterface ivi = new InstanceVirtualInterface(address, mac);
+                           IPMap.put(address,ivi);
                         }
                     }
                     }catch(Exception e){
                         //not able to retrieve ip addresses
                         }
                     }
-                String ManagementIP="";
-                String subnetName="";
-                String VlanID="";
-                String VlanIP="";
                 
+                
+                String VlanID="";
+
+                InstanceVirtualInterface managementInterface = new InstanceVirtualInterface("","");
+                InstanceVirtualInterface vlanInterface = new InstanceVirtualInterface("","");
                 //loop through hash map
                 Iterator mapiterator = IPMap.entrySet().iterator();
                 while(mapiterator.hasNext()){
                 Map.Entry entry = (Map.Entry)mapiterator.next();
                 String ip=entry.getKey().toString();
   
-                if(ip.contains(managementNetworkIpPattern)) ManagementIP=ip;
+                if(ip.contains(managementNetworkIpPattern)) {
+                managementInterface.setIpAddress(ip);
+                managementInterface.setMacAddress(IPMap.get(ip).getMacAddress());
+                }
                 if(ip.contains(nokiaVlanPattern)) {
-                    subnetName=entry.getValue().toString();
-                    VlanIP=ip;
-                            
+                    
+                    vlanInterface.setIpAddress(ip);
+                    vlanInterface.setMacAddress(IPMap.get(ip).getMacAddress());
                             };
                 //EquipementType+"VLAN-"+SegmentationID+"Private-Network";
                 
                 }
-                String Parts [] = subnetName.split("-");
+                String Parts [] = name.split("_");
                 //for(String s : Parts) System.out.println(s);
-                if (Parts.length > 1) VlanID=Parts[Parts.length-3];
+                if (Parts.length > 1) VlanID=Parts[2];
                 
                 System.out.println(VlanID);
-                Server server = new Server(id, name, status, key_name, ManagementIP,VlanID,VlanIP);
-                //System.out.println(server.toString());
+                Server server = new Server(id, name, status, key_name, VlanID,managementInterface,vlanInterface);
+                System.out.println(server.toString());
                 list.add(server);
             }
             }
