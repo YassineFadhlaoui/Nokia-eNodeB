@@ -101,7 +101,8 @@
                       
                     <th><i class="fas fa-address-card"></i> Vlan Name</th>
                     <th><i class="fas fa-sort-numeric-up"></i> Segmentation ID</th>
-                    <th> <i class="fas fa-globe"></i> Instance IP</th>
+                    <th> <i class="fas fa-globe"></i> Management IP</th>
+                    <th> <i class="fas fa-globe"></i> VLAN IP</th>
                     <th><i class="fas fa-heartbeat"></i> status</th>
                     <th><center><i class="fas fa-download"></i> Download Key</center></th>
                     <th><center><i class="fas fa-database"></i> Stack Name</center></th>
@@ -113,6 +114,7 @@
                     <tr>
                     <td><c:out value="${vlan.vlan.name}"/></td>
                     <td><center><c:out value="${vlan.vlan.segmentationID}"/></center></td>
+                    <td><c:out value="${vlan.instance.floatingIP}"/></td>
                     <td><c:out value="${vlan.instance.floatingIP}"/></td>
                     <td><span class='badge badge-pill <c:choose><c:when test="${vlan.instance.status.equals('ACTIVE')}"><c:out value="badge-primary"/></c:when><c:otherwise><c:out value="badge-danger"/></c:otherwise>   </c:choose>' > <c:out value="${vlan.instance.status}"/></span></td>
                     <td><center><button class="btn btn-outline-secondary" type="button"> <i class="fas fa-cloud-download-alt"></i> <a href="<c:url value="/DownloadKey?id=${vlan.instance.keyName}" />">Download</a></button></center></td>

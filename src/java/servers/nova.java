@@ -33,6 +33,9 @@ public class nova {
     private String openstackServerIP;
     private String novaApiEndpointPort;
     private String httpMethod;
+    private String preferredNokiaVMIP;
+    private String nokiaVlanPattern;
+    private String managementNetworkIpPattern;
     
     public nova(){
     
@@ -41,12 +44,18 @@ public class nova {
     Parameters.add("NOVA_API_VERSION");
     Parameters.add("NOVA_API_PORT");
   
+    Parameters.add("NOKIA_VLAN_IP_PATTERN");
+    Parameters.add("MANAGEMENT_IP_PATTERN");
+    
+    
     Vector <String> params = helpers.Config.getProperties(Parameters);
     
     openstackServerIP=params.get(0);
     novaApiVersion=params.get(1);
     httpMethod="GET";
     novaApiEndpointPort=params.get(2);
+    nokiaVlanPattern=params.get(3);
+    managementNetworkIpPattern=params.get(4);
     
     
     }
@@ -72,12 +81,14 @@ public class nova {
             JSONObject ServersObject = new JSONObject(sb.toString());
             //System.out.println(ServersObject);
             org.json.JSONArray servers = ServersObject.getJSONArray("servers");
-            //System.out.println(servers);
+            
             if(servers.length() > 0){
             for (int i = 0; i < servers.length(); i++) {
+                
                 String id = servers.getJSONObject(i).getString("id");
                 String name = servers.getJSONObject(i).getString("name");
                 String status = servers.getJSONObject(i).getString("status");
+                //String key_name="nothin here";
                 String key_name= servers.getJSONObject(i).getString("key_name");
                 JSONObject addresses = new JSONObject(servers.getJSONObject(i).get("addresses").toString());
                 
@@ -90,7 +101,9 @@ public class nova {
                     
                     if(addr.length() > 0){
                         for(int item=0; item < addr.length(); item++){
+                           
                            String  address =addr.getJSONObject(item).getString("addr");
+                           //System.out.println(address);
                            IPMap.put(address,s.toString());
                         }
                     }
@@ -108,8 +121,8 @@ public class nova {
                 Map.Entry entry = (Map.Entry)mapiterator.next();
                 String ip=entry.getKey().toString();
   
-                if(ip.contains("172.31")) ManagementIP=ip;
-                if(ip.contains("192.168.255")) subnetName=entry.getValue().toString();
+                if(ip.contains(managementNetworkIpPattern)) ManagementIP=ip;
+                if(ip.contains(nokiaVlanPattern)) subnetName=entry.getValue().toString();
                 //EquipementType+"VLAN-"+SegmentationID+"Private-Network";
                 
                 }
@@ -124,7 +137,7 @@ public class nova {
             }
             }
         } catch (ParseException | IOException | ClassNotFoundException | JSONException ex) {
-            System.out.println("Could not request Access Token from : " + openstackServerIP);
+            //System.out.println("Could not request Access Token from : " + openstackServerIP);
             System.out.println(ex.toString());
         }
         return list;

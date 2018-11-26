@@ -290,7 +290,10 @@ public class TemplateEngine {
     }
 
     public Map<String, Object> VlanFloatingIP(String VLANFloatingIP, String floating_network, String floating_subnet) {
-
+        Vector<String> Parameters = new Vector();
+        Parameters.add("NOKIA_PREFERRED_IP");
+        Vector<String> params = Config.getProperties(Parameters);
+        String nokiaVMPreferredVMip = params.get(0);
         Map<String, Object> FloatingIPTemplate = new LinkedHashMap<>();
         Map<String, Object> properties = new LinkedHashMap<>();
         Map<String, String> floating_networkMap = new HashMap<>();
@@ -299,7 +302,7 @@ public class TemplateEngine {
         floating_subnetMap.put("get_resource", floating_subnet);
         properties.put("floating_network", floating_networkMap);
         properties.put("floating_subnet", floating_subnetMap);
-        properties.put("floating_ip_address","192.168.255.129");
+        properties.put("floating_ip_address",nokiaVMPreferredVMip);
         
         FloatingIPTemplate.put("type", "OS::Neutron::FloatingIP");
         FloatingIPTemplate.put("properties", properties);

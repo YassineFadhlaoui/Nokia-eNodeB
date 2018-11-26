@@ -76,7 +76,7 @@ public class listVlans extends HttpServlet {
                     for (VLAN vlan : VLANs) {
                         if (instance.getVlanID().equalsIgnoreCase(vlan.getVlan().getSegmentationID())) {
                             vlan.setInstance(instance);
-
+                            System.out.println(instance);
                         }
                     }
                     for (HeatStack stack : stacks) {
